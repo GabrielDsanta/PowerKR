@@ -1,34 +1,80 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 
-import { AntDesign, Feather } from "@expo/vector-icons";
+import { FlatList, ScrollView, StyleSheet, Text } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import {
-  Dimensions,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+  HomeHeader,
+  StatisticsList,
+  TaskCard,
+  UserDataCard,
+} from "./components";
 
 import colors from "styles/colors";
 import fonts from "styles/fonts";
 
-const { height } = Dimensions.get("window");
-
-export const Home: FC<{ navigation: any }> = ({ navigation }) => {
-
-
+export const Home: FC = () => {
   return (
-    <View style={styles.containerMain}>
+    <SafeAreaView style={styles.container}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <HomeHeader />
+        <UserDataCard />
 
-    </View>
+        <Text style={styles.titleFlatList}>Compromissos homologados</Text>
+        <FlatList
+          data={mockData}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <TaskCard
+              priority={item.priority}
+              key={item.id}
+              createdAt={item.createdAt}
+              title={item.title}
+            />
+          )}
+        />
+
+        <StatisticsList />
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  containerMain: {
-    backgroundColor: colors.background,
+  container: {
     flex: 1,
-    alignItems: "center",
+    backgroundColor: colors.background,
+    paddingHorizontal: 20,
+  },
+  titleFlatList: {
+    ...fonts.MediumFont,
+    color: colors.gray200,
+    fontSize: 14,
+    marginBottom: 15,
   },
 });
+
+const mockData = [
+  {
+    id: "1",
+    createdAt: new Date(),
+    title:
+      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illum, numquam modi repellendus tempore soluta cum quae maiores veritatis",
+    priority: "High",
+  },
+  {
+    id: "2",
+    createdAt: new Date(),
+    title:
+      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illum, numquam modi repellendus tempore soluta cum quae maiores veritatis",
+    priority: "Medium",
+  },
+  {
+    id: "3",
+    createdAt: new Date(),
+    title:
+      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illum, numquam modi repellendus tempore soluta cum quae maiores veritatis",
+    priority: "Low",
+  },
+];

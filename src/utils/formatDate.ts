@@ -1,9 +1,8 @@
-import "moment/locale/pt-br"
-import moment from "moment"
+import "moment/locale/pt-br";
+import moment from "moment";
 
-export function formatDate(date: Date){
+export function formatDate(date: Date) {
   const dataMoment = moment(date);
-  dataMoment.locale('pt-br');
-  const dataFormatada = dataMoment.format('D [de] MMMM [de] YYYY');
-  return dataFormatada;
+  const formatedDateToString = dataMoment.format("D MMM");
+  return formatedDateToString;
 }
