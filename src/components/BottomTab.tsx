@@ -3,40 +3,93 @@ import React, { FC } from "react";
 import {
   Platform,
   StyleSheet,
+  Text,
   TouchableOpacity,
   View,
 } from "react-native";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
-import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-// import { AppTabsRoutesNavigationRoutesProps } from "screens/AppTabs";
+import {
+  MaterialCommunityIcons,
+  Ionicons,
+  Octicons,
+  FontAwesome5,
+} from "@expo/vector-icons";
+import { AppTabsRoutesNavigationRoutesProps } from "screens/AppTabs";
 
 import colors from "../styles/colors";
-import fonts from "../styles/fonts";
+import fonts from "styles/fonts";
 
-type IconName = "home";
-type RouteNames = "StudentList";
+type RouteNames = "Home" | 'Profile';
 
 const isAndroid = Platform.OS === "android";
 
 export const BottomTab: FC<BottomTabBarProps> = ({ state }) => {
-  // const navigation = useNavigation<AppTabsRoutesNavigationRoutesProps>();
+  const navigation = useNavigation<AppTabsRoutesNavigationRoutesProps>();
+
+  const bottomTabButtons = [
+    {
+      id: "1",
+      label: "Home",
+      component: (
+        <Octicons
+          name="home"
+          color={state.index === 0 ? "white" : colors.gray200}
+          size={28}
+        />
+      ),
+      route: "Home",
+    },
+    {
+      id: "2",
+      label: "Compromissos",
+      component: (
+        <MaterialCommunityIcons
+          color={state.index === 1 ? "white" : colors.gray200}
+          name="align-vertical-top"
+          size={28}
+        />
+      ),
+      route: "Home1",
+    },
+    {
+      id: "3",
+      label: "Comitês",
+      component: (
+        <Ionicons
+          color={state.index === 2 ? "white" : colors.gray200}
+          name="chatbubble-ellipses-outline"
+          size={28}
+        />
+      ),
+      route: "Home2",
+    },
+    {
+      id: "4",
+      label: "Perfil",
+      component: (
+        <FontAwesome5
+          color={state.index === 3 ? "white" : colors.gray200}
+          name="user-circle"
+          size={28}
+        />
+      ),
+      route: "Home3",
+    },
+  ];
 
   return (
     <View style={styles.container}>
-      {state.routes.map((route, index) => {
-        // const color = state.index === index ? colors.primary : colors.gray300;
+      {bottomTabButtons.map((button, index) => {
         return (
           <TouchableOpacity
-            key={index.toString()}
-            // onPress={() => navigation.navigate(route.name as RouteNames)}
+            key={button.id}
+            onPress={() => navigation.navigate(button.route as RouteNames)}
           >
-            <Feather
-              name={["home"][index] as IconName}
-              size={32}
-              color='red'
-              // color={color}
-            />
+            <View style={styles.containerIconStyles}>
+              {button.component}
+              <Text style={styles.labelTextStyles}>{button.label}</Text>
+            </View>
           </TouchableOpacity>
         );
       })}
@@ -48,8 +101,8 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     alignSelf: "center",
-    height: "9%",
-    // backgroundColor: colors.gray100,
+    height: "12%",
+    backgroundColor: colors.blue300,
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
@@ -72,19 +125,15 @@ const styles = StyleSheet.create({
 
     elevation: 10,
   },
-  label: {
-    // backgroundColor: colors.primary,
-    width: 22,
-    height: 22,
-    borderRadius: 10000,
-    position: "absolute",
-    right: -13,
-    top: -10,
+  containerIconStyles: {
     alignItems: "center",
     justifyContent: "center",
   },
-  labelText: {
-    ...fonts.boldFont,
-    color: "white",
+  labelTextStyles: {
+    ...fonts.regularFont,
+    color: colors.gray200,
+    textAlign: "center",
+    fontSize: 10,
+    marginTop: 5,
   },
 });
