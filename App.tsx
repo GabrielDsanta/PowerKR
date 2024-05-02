@@ -17,27 +17,21 @@ import {
   Inter_900Black,
 } from "@expo-google-fonts/inter";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { Provider } from "react-redux";
 import { Loading } from "./src/components";
 
-import configureStore from "./src/redux/store/configureStore";
 import Routes from "./src/Routes";
 
 const queryClient = new QueryClient();
-
-const store = configureStore();
 
 export default function App() {
   const [fontsLoadead] = useFonts(fonts);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <Provider store={store}>
-        <QueryClientProvider client={queryClient}>
-          <StatusBar style="light" />
-          {fontsLoadead ? <Routes /> : <Loading />}
-        </QueryClientProvider>
-      </Provider>
+      <QueryClientProvider client={queryClient}>
+        <StatusBar style="light" />
+        {fontsLoadead ? <Routes /> : <Loading />}
+      </QueryClientProvider>
     </GestureHandlerRootView>
   );
 }
