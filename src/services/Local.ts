@@ -1,17 +1,12 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const keys = {
-  USER: "@storage:userId",
   JWT: "@storage:jwt",
 };
 
 type Keys = keyof typeof keys;
 
 export class Local {
-  static async setUser(userId: string) {
-    return await this.set("USER", JSON.stringify(userId));
-  }
-
   static async setJWT(jwt: string) {
     return await this.set("JWT", JSON.stringify(jwt));
   }
@@ -42,6 +37,5 @@ export class Local {
 
   static async logout() {
     await AsyncStorage.removeItem(keys.JWT);
-    await AsyncStorage.removeItem(keys.USER);
   }
 }
