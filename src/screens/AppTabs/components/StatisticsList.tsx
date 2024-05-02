@@ -31,7 +31,7 @@ export const StatisticsList: FC = () => {
             circleCircumference * (1 - progressPercentage / 100);
 
           return (
-            <View style={styles.statisticCard}>
+            <View key={item.id} style={styles.statisticCard}>
               <Svg height="125" width="125">
                 <Circle
                   cx="60"
