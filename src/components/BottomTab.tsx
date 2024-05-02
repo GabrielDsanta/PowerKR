@@ -74,7 +74,7 @@ export const BottomTab: FC<BottomTabBarProps> = ({ state }) => {
           size={28}
         />
       ),
-      route: "Home3",
+      route: "Profile",
     },
   ];
 
